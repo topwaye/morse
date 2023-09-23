@@ -5,7 +5,7 @@ A 286 CPU is like an old style battery charger.
 
 MORSE is alternatively called header 286 segments. A 286 CPU can control memory segments directly, but a 386 CPU doesn't. It controls memory segments through headers which give them spaces. No header, no concept of space, only memory segments.
 
-When booting, MORSE program is read into a memory segment from a disk, then set a page table which loads this memory segment into a space, preparing for CPU paging.
+When booting, MORSE program is read into a memory segment from a disk, then set a page table, which loads this memory segment into a space, preparing for CPU paging.
 
 Once CPU paging is Enabled, the first process has been ready.
 
