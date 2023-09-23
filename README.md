@@ -7,7 +7,7 @@ MORSE is alternatively called header 286 segments. A 286 CPU can control memory 
 
 When booting, MORSE program is read into a memory segment from a disk, then set a page table, which loads this memory segment into a space, preparing for CPU paging.
 
-Once CPU paging is Enabled, the first process has been ready.
+Once CPU paging is enabled, the first process has been ready.
 
 Allocate a page table for the second process, read a new program into a memory segment, set the page table, assign a new CPU, then the second process is ready.
 
