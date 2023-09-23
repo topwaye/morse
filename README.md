@@ -11,4 +11,4 @@ Once CPU paging is Enabled, the first process has been ready.
 
 Allocate a page table for the second process, read a new program into a memory segment, set the page table, assign a new CPU, then the second process is ready.
 
-The concept of a memory segment appeared from 286, and the concept of space appeared from 386.
+The concept of memory segmentation appeared in 286, and the concept of space appeared in 386.
