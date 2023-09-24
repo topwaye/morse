@@ -16,10 +16,11 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 386 memory layout is shown as follows:
 
 +----+
+
 |    |
 |    |
-   |    |
-   | s1 |
+|    |
+| s1 |
 |    |
 |    |
 |    |
