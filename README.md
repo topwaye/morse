@@ -13,6 +13,10 @@ Allocate a page table for the second process, read a new program into a memory s
 
 The concept of segment appeared in 286, and the concept of space appeared in 386.
 
+286 memory layout is shown as follows:
+        
++-----------s0-----------++-----------s1-----------+
+
 386 memory layout is shown as follows:
         
 +--h0--++-----------s0-----------++--h1--++-----------s1-----------+
