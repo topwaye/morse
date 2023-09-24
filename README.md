@@ -15,10 +15,10 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 
 286 memory layout is shown as follows:
 
-+-----------seg0-----------++-----------seg1-----------+
++-----------program0-----------++-----------program1-----------+
 
 386 memory layout is shown as follows:
 
-+--hdr0--++-----------seg0-----------++--hdr1--++-----------seg1-----------+
++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
 topwaye@hotmail.com
