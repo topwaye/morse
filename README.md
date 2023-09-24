@@ -18,9 +18,13 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 +----+
 
 |    |
+
 |    |
+
 |    |
+
 | s1 |
+
 |    |
 |    |
 |    |
