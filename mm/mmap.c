@@ -2,15 +2,15 @@
  *	morse/mm/mmap.c
  */
 
-#include <linux/stat.h>
-#include <linux/sched.h>
-#include <linux/kernel.h>
-#include <linux/mm.h>
-#include <linux/shm.h>
-#include <linux/errno.h>
-#include <linux/mman.h>
-#include <linux/string.h>
-#include <linux/malloc.h>
+#include <morse/stat.h>
+#include <morse/sched.h>
+#include <morse/kernel.h>
+#include <morse/mm.h>
+#include <morse/shm.h>
+#include <morse/errno.h>
+#include <morse/mman.h>
+#include <morse/string.h>
+#include <morse/malloc.h>
 
 #include <asm/segment.h>
 #include <asm/system.h>
