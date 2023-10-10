@@ -27,4 +27,8 @@ Almost all computing today is interrupt-driven, which means they follow a list o
 
 +--h0--++--interrupt service program--++--program0--++--h1--++--interrupt service program--++--program1--+
 
+In this case, header0 and header1 create two spaces. Each space cannot access the other directly or indirectly.
+
+For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+
 topwaye@hotmail.com
