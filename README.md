@@ -21,4 +21,8 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 
 +--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
+386 memory expanded layout is shown as follows:
+
++--header0--++--interrupt service program--++-----------program0-----------++--header1--++--interrupt service program--++-----------program1-----------+
+
 topwaye@hotmail.com
