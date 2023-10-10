@@ -21,6 +21,8 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 
 +--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
+Almost all computing today is interrupt-driven, which means they follow a list of instructions in a program and run those until they get to the end or sense an interrupt signal. If the latter event happens, the computer pauses running the current program.
+
 386 memory expanded layout is shown as follows:
 
 +--h0--++--interrupt service program--++--program0--++--h1--++--interrupt service program--++--program1--+
