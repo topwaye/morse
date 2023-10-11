@@ -29,6 +29,12 @@ Almost all CPUs today is interrupt-driven, which means they follow a list of ins
 
 In this case, header0 and header1 create two spaces totally. Each space cannot access the other directly or indirectly.
 
-For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+For the header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+
+TCP is one packet for one ack packet asynchronously, meaning a batch of packets are transferred at one time, then TCP waits for their ack packets.
+
+TCP three-way handshake is one packet for one ack packet synchronously as below: For me, I give you one packet and you give me one ack packet. For you, you give me one packet and I give you one ack packet. That is, both packets are acked respectively.
+
+TCP sliding window is directed against payloads, not packets. Packets without payloads can be free to transfer anytime. Only if payloads reach the top line, reset the size of the payload window.
 
 topwaye@hotmail.com
