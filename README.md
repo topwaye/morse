@@ -29,7 +29,7 @@ Almost all CPUs today is interrupt-driven, which means they follow a list of ins
 
 In this case, header0 and header1 create two spaces totally. Each space cannot access the other directly or indirectly.
 
-For the header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
 
 TCP is one packet for one ack packet asynchronously, meaning a batch of packets are transferred at one time, then TCP waits for their ack packets.
 
