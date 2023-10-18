@@ -39,6 +39,8 @@ TCP three-way handshake is one packet for one ack packet synchronously as below:
 
 TCP sliding window is directed against payloads, not packets. Packets without payloads can be free to transfer anytime. Only if payloads reach the top line, TCP resets the top line of the payload window size.
 
+Copy-on-write is volatile.
+
 Copy-on-write means if you find you cannot write, change a page table record of yours. Only you, not someone else.
 
 An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read-only property is set at a record in the page table.
