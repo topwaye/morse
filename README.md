@@ -39,4 +39,8 @@ TCP three-way handshake is one packet for one ack packet synchronously as below:
 
 TCP sliding window is directed against payloads, not packets. Packets without payloads can be free to transfer anytime. Only if payloads reach the top line, TCP resets the top line of the payload window size.
 
+Copy-on-write means if you find you cannot write, change your page table record. Only you, not someone else.
+
+Dirty-read/write doesn't exist in the hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
+
 topwaye@hotmail.com
