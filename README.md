@@ -43,7 +43,7 @@ Copy-on-write means if you find you cannot write, change a page table record of 
 
 An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read record is set at the page table.
 
-Dirty-read/write doesn't exist in the hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
+Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
 MORSE doesn't support copy-on-write or load-on-demand. Either of them needs a lot of locks which MORSE doesn't love.
 
