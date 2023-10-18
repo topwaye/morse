@@ -45,4 +45,6 @@ Dirty-read/write doesn't exist in the hardware layer, only read or write one by 
 
 MORSE doesn't support copy-on-write or load-on-demand. Either of them needs a lot of locks which MORSE doesn't love.
 
+Once a page table is set, MORSE doesn't change its records competitively.
+
 topwaye@hotmail.com
