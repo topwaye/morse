@@ -41,7 +41,7 @@ TCP sliding window is directed against payloads, not packets. Packets without pa
 
 Copy-on-write means if you find you cannot write, change a page table record of yours. Only you, not someone else.
 
-An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read record is set at the page table.
+An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read-only property is set at a record in the page table.
 
 Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
