@@ -53,8 +53,4 @@ Copy-on-write is safe.
 
 Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
-MORSE doesn't support copy-on-write or load-on-demand. Either of them needs a lot of locks which MORSE doesn't love.
-
-Once a page table is set, MORSE doesn't change its records competitively.
-
 topwaye@hotmail.com
