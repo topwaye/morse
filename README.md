@@ -49,7 +49,7 @@ Therefore, after a read-only property is set at a record in the page table, anot
 
 As a result, there is no harmful consequence of this unsolved problem.
 
-Copy-on-write is safe. Whenever changing a record of a page table, the change takes effect from the next CPU instruction.
+Copy-on-write is safe. One is writing, another one cannot be reading simultaneously.
 
 Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
