@@ -45,9 +45,9 @@ Copy-on-write means if you find you cannot write, change a page table record of 
 
 An unsolved problem of copy-on-write is how to stop instantly a CPU writing instruction which does writing when a read-only property is set at a record in the page table.
 
-Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
+Fortunately, dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
-Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
+Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
 MORSE doesn't support copy-on-write or load-on-demand. Either of them needs a lot of locks which MORSE doesn't love.
 
