@@ -47,7 +47,7 @@ On a bus, everything is serial, not parallel. That is, one is writing, another o
 
 On a bus, a series of CPU instructions are shown as follows:
 
-+--write--++--write a record of a page table--++--read--++--read--++--read--++--write--+
++--write--++--write a page table record--++--read--++--read--++--read--++--write--+
 
 Copy-on-write is safe.
 
