@@ -45,7 +45,7 @@ An unsolved problem of copy-on-write is how to stop instantly a CPU writing inst
 
 Fortunately, dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
-Therefore, after a read-only property is set at a record in the page table, another CPU instruction may be waiting on the bus for the current instruction ending automatically.
+Therefore, after a read-only property is set at a record in the page table, another CPU reading instruction may be waiting on the bus for the current instruction ending automatically.
 
 As a result, there is no harmful consequence of this unsolved problem.
 
