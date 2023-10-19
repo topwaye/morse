@@ -39,15 +39,17 @@ TCP three-way handshake is one packet for one ack packet synchronously as below:
 
 TCP sliding window is directed against payloads, not packets. Packets without payloads can be free to transfer anytime. Only if payloads reach the top line, TCP resets the top line of the payload window size.
 
-Copy-on-write is volatile.
+Copy-on-write is volatile. The first rule of programming is, do not chase a volatile variable.
 
 Copy-on-write means if you find you cannot write, change a page table record of yours. Only you, not someone else.
 
 An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read-only property is set at a record in the page table.
 
-Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
+Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
 MORSE doesn't support copy-on-write or load-on-demand. Either of them needs a lot of locks which MORSE doesn't love.
+
+Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
 Once a page table is set, MORSE doesn't change its records competitively.
 
