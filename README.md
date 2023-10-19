@@ -43,7 +43,7 @@ Copy-on-write is irregular. The first rule of programming is, do not chase a irr
 
 Copy-on-write means if you find you cannot write, change a page table record of yours. Only you, not someone else.
 
-An unsolved problem of copy-on-write is how to stop instantly a writing instruction which does writing when a read-only property is set at a record in the page table.
+An unsolved problem of copy-on-write is how to stop instantly a CPU writing instruction which does writing when a read-only property is set at a record in the page table.
 
 Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
