@@ -62,9 +62,9 @@ Algorithm:
 
 /* only one holder */
 
-if (page->ref == 0) { page->ref = -1; load_page();  page->ref = 1; }
-
 if (page->ref == -1) sleep();
+
+if (page->ref == 0) { page->ref = -1; load_page();  page->ref = 1; }
 
 /* more than one holder */
 
