@@ -57,9 +57,8 @@ Algorithm:
 
 * page->ref:
 * 0: free
-* 1: number of holders
 * -1: intermediate state (i.e. loading data from a disk)
-* 2+: number of holders
+* 1+: number of holders
 
 /* only one holder */
 
