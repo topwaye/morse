@@ -62,7 +62,11 @@ Algorithm:
 
 /* only one holder */
 
-if(!page_exist()) load_page();
+if(page->ref == 0) 
+{
+page->ref = -1;
+load_page();
+}
 
 if(page->ref == -1) sleep();
 
