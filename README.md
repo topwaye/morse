@@ -55,15 +55,27 @@ Consider the following concurrence scenario: Process A and Process B use the sam
 
 Algorithm:
 
-if(!page->ready) sleep();
+/* 
+* page->ref:
+* 0: free
+* 1: allocated
+* -1: intermediate state (i.e. loading data from a disk)
+* >1: number of holders
+*/
 
-if(!page->exist) load_page();
+/* not ready */
+
+if(page->ref == -1) sleep();
+
+if(!page_exist()) load_page();
+
+/* ready */
 
 lock_in();
 
-if(page->ref > 1) set_page_table();
-
 if(page->ref == 1) set_page_table();
+
+if(page->ref > 1) set_page_table();
 
 lock_out();
 
