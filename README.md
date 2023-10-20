@@ -62,17 +62,17 @@ Algorithm:
 
 /* only one holder */
 
-if (page->ref == -1) sleep();
+if ( page->ref == -1 ) sleep();
 
-if (page->ref == 0) { page->ref = -1; load_page();  page->ref = 1; }
+if ( page->ref == 0 ) { page->ref = -1; load_page(); page->ref = 1; }
 
 /* more than one holder */
 
 lock_in();
 
-if (page->ref == 1) set_page_table();
+if ( page->ref == 1 ) set_page_table();
 
-if (page->ref > 1) set_page_table();
+if ( page->ref > 1 ) set_page_table();
 
 lock_out();
 
