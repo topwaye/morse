@@ -57,17 +57,17 @@ Algorithm:
 
 * page->ref:
 * 0: free
-* 1: allocated
+* 1: number of holders
 * -1: intermediate state (i.e. loading data from a disk)
 * 2+: number of holders
 
 if(!page_exist()) load_page();
 
-/* not ready */
+/* page not ready */
 
 if(page->ref == -1) sleep();
 
-/* ready */
+/* page ready */
 
 lock_in();
 
