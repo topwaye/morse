@@ -55,23 +55,15 @@ Consider the following concurrence scenario: Process A and Process B use the sam
 
 Algorithm:
 
-if(!page->ready)
-    sleep();
+if(!page->ready) sleep();
 
-if(!page->exist)
-    load_page();
+if(!page->exist) load_page();
 
 lock_in();
 
-if(page->ref > 1)
-{
-	set_page_table();
-}
+if(page->ref > 1) set_page_table();
 
-if(page->ref == 1)
-{
-	set_page_table();
-}
+if(page->ref == 1) set_page_table();
 
 lock_out();
 
