@@ -61,13 +61,13 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 2+: number of holders
 
-if(!page_exist()) load_page();
+/* only one holder */
 
-/* page not ready */
+if(!page_exist()) load_page();
 
 if(page->ref == -1) sleep();
 
-/* page ready */
+/* more than one holder */
 
 lock_in();
 
@@ -76,5 +76,9 @@ if(page->ref == 1) set_page_table();
 if(page->ref > 1) set_page_table();
 
 lock_out();
+
+/* one holder remaining */
+
+unload_page();
 
 topwaye@hotmail.com
