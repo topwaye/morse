@@ -61,11 +61,11 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 2+: number of holders
 
+if(!page_exist()) load_page();
+
 /* not ready */
 
 if(page->ref == -1) sleep();
-
-if(!page_exist()) load_page();
 
 /* ready */
 
