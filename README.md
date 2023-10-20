@@ -59,7 +59,7 @@ Algorithm:
 * 0: free
 * 1: allocated
 * -1: intermediate state (i.e. loading data from a disk)
-* 2+: number of holders
+* > 2: number of holders
 
 /* not ready */
 
