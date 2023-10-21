@@ -60,7 +60,7 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 1+: number of holders
 
-/* initialization: page not ready. a lot of holders, only one holder works through. */
+/* initialization: page not ready. a lot of holders, only one holder works through */
 
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
@@ -70,6 +70,8 @@ page->ref = 1; /* +--w--+ */ /* no more sleepers */
 
 wake ();
 
+goto start_working;
+
 }
 
 if ( page->ref == -1 ) /* +--r--+ */ {
@@ -78,17 +80,25 @@ sleep ();
 
 }
 
-/* working: page ready. a lot of holders. */
+atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
 
-spin_lock_in ();
+/* working: page ready. a lot of holders */
 
-if ( page->ref == 1 ) set_page_table ( page );
+start_working:
 
-if ( page->ref > 1 ) set_page_table ( page );
+spin_lock_in (page_table); /* not lock page->ref */
 
-spin_lock_out ();
+if ( page->ref > 1 ) /* +--r--+ */ /* fresh new value, not the old value when something happened */ {
 
-/* uninitialization: page not ready. a lot of holders, only the last one holder works through. */
+split_page ( &page ); /* copy-on-write */
+
+}
+
+set_page_table ( page );
+
+spin_lock_out (page_table);
+
+/* uninitialization: page not ready. a lot of holders, only the last one holder works through */
 
 if ( atomic_rw_group_decrease ( page->ref ) == 0 ) /* +--r--++--w--+ */ {
 
