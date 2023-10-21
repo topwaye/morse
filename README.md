@@ -84,7 +84,7 @@ atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
 
 /* working: page ready. a lot of holders */
 
-start_working:
+start_working: assert ( page->ref >= 1 ); /* +--r--+ */
 
 spin_lock_in (page_table); /* not to lock page->ref */
 
