@@ -61,7 +61,7 @@ Algorithm:
 * 0: ready
 * 1+: number of holders (i.e. page table records)
 
-/* initialization: page not ready. a lot of holders, only one holder works through */
+/* initialization: page not ready. only one goes through */
 
 if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) /* +--r--++--w--+ */ { 
 
@@ -79,13 +79,13 @@ sleep ();
 
 }
 
-/* working: page ready. a lot of holders here ready to go */
+/* working: page ready. only one goes through */
 
 spin_lock_in (page_table); /* also lock page->ref */
 
 assert ( page->ref >= 0 ); /* +--r--+ */
 
-if ( page->ref > 1 ) /* +--r--+ */ /* the 'old' value when something happened (e.g. a page fault) */ {
+if ( page->ref > 1 ) /* +--r--+ */ /* static value */ {
 
 split_page ( &page ); /* copy-on-write */
 
@@ -99,7 +99,7 @@ page->ref--; /* decrease the holder count */
 
 spin_lock_out (page_table);
 
-/* uninitialization: page not ready. a lot of holders, only the last one holder works through */
+/* uninitialization: page not ready. only one goes through */
 
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
