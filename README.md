@@ -60,13 +60,24 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 1+: number of holders
 
-/* only one holder */
+/* initialization: a lot of holders, only one holder work through */
 
-if ( page->ref == -1 ) sleep();
+if ( atomic_rw_group_if_then(page->ref, 0 , -1 ) /* +--r--++--w--+ */ 
+{ 
 
-if ( page->ref == 0 ) { page->ref = -1; load_page(); page->ref = 1; }
+load_page();
 
-/* more than one holder */
+page->ref = 1; /* +--w--+ *//* no more sleepers */
+
+wake();
+
+}
+
+if ( page->ref == -1 ) /* +--r--+ */
+
+sleep();
+
+/* working: page ready */
 
 lock_in();
 
@@ -76,10 +87,10 @@ if ( page->ref > 1 ) set_page_table();
 
 lock_out();
 
-/* one holder remaining */
+/* uninitialization: a lot of holders, only the last one holder work through */
+
+if ( atomic_rw_group_decrease(page->ref) == 0 ) /* +--r--++--w--+ */ 
 
 unload_page();
-
-page->ref = 0;
 
 topwaye@hotmail.com
