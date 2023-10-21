@@ -91,11 +91,11 @@ split_page ( &page ); /* copy-on-write */
 
 }
 
-set_page_table ( page ) ? /* the page table record holds the page */
+set_page_table ( page ) /* the page table record holds the page */
 
-page->ref++ : /* increase the holder count */
+? page->ref++ /* increase the holder count */
 
-page->ref--; /* decrease the holder count */
+: page->ref--; /* decrease the holder count */
 
 spin_lock_out (page_table);
 
