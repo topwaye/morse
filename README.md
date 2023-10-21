@@ -85,7 +85,7 @@ spin_lock_in (page_table); /* also lock page->ref */
 
 assert ( page->ref >= 0 ); /* +--r--+ */
 
-if ( page->ref > 1 ) /* +--r--+ */ /* the old value when something happened (e.g. a page fault) */ {
+if ( page->ref > 1 ) /* +--r--+ */ /* the 'old' value when something happened (e.g. a page fault) */ {
 
 split_page ( &page ); /* copy-on-write */
 
