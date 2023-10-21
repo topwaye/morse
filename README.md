@@ -65,7 +65,7 @@ Algorithm:
 
 if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) ) /* +--r--++--w--+ */ { 
 
-load_page ();
+load_data ( page );
 
 page->ref = 0; /* +--w--+ */ /* no more sleepers */
 
@@ -103,7 +103,7 @@ spin_lock_out (page_table);
 
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) ) /* +--r--++--w--+ */ { 
 
-unload_page ();
+unload_data ( page );
 
 page->ref = -2; /* +--w--+ */
 
