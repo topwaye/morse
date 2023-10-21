@@ -82,9 +82,9 @@ sleep ();
 
 spin_lock_in ();
 
-if ( page->ref == 1 ) set_page_table ();
+if ( page->ref == 1 ) set_page_table ( page );
 
-if ( page->ref > 1 ) set_page_table ();
+if ( page->ref > 1 ) set_page_table ( page );
 
 spin_lock_out ();
 
