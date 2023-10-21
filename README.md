@@ -65,7 +65,6 @@ Algorithm:
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
 load_page ();
-
 page->ref = 1; /* +--w--+ */ /* no more sleepers */
 
 wake ();
