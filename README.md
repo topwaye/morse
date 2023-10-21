@@ -82,7 +82,7 @@ sleep ();
 
 atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
 
-/* working: page ready. a lot of holders */
+/* working: page ready. a lot of holders here ready to go */
 
 start_working: assert ( page->ref >= 1 ); /* +--r--+ */
 
