@@ -60,37 +60,40 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 1+: number of holders
 
-/* initialization: a lot of holders, only one holder work through */
+/* initialization: page not ready. a lot of holders, only one holder works through. */
 
-if ( atomic_rw_group_if_then(page->ref, 0 , -1 ) /* +--r--++--w--+ */ 
-{ 
+if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
-load_page();
+load_page ();
 
-page->ref = 1; /* +--w--+ *//* no more sleepers */
+page->ref = 1; /* +--w--+ */ /* no more sleepers */
 
-wake();
+wake ();
 
 }
 
-if ( page->ref == -1 ) /* +--r--+ */
+if ( page->ref == -1 ) /* +--r--+ */ {
 
-sleep();
+sleep ();
 
-/* working: page ready */
+}
 
-lock_in();
+/* working: page ready. a lot of holders. */
 
-if ( page->ref == 1 ) set_page_table();
+lock_in ();
 
-if ( page->ref > 1 ) set_page_table();
+if ( page->ref == 1 ) set_page_table ();
 
-lock_out();
+if ( page->ref > 1 ) set_page_table ();
 
-/* uninitialization: a lot of holders, only the last one holder work through */
+lock_out ();
 
-if ( atomic_rw_group_decrease(page->ref) == 0 ) /* +--r--++--w--+ */ 
+/* uninitialization: page not ready. a lot of holders, only the last one holder works through. */
 
-unload_page();
+if ( atomic_rw_group_decrease ( page->ref ) == 0 ) /* +--r--++--w--+ */ {
+
+unload_page ();
+
+}
 
 topwaye@hotmail.com
