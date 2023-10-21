@@ -57,7 +57,7 @@ Algorithm:
 
 * page->ref:
 * -2: free
-* -1: intermediate state (i.e. exchange data with a disk)
+* -1: intermediate state (i.e. exchanging data with a disk)
 * 0: ready
 * 1+: number of holders (i.e. page table records)
 
