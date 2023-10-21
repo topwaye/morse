@@ -63,7 +63,7 @@ Algorithm:
 
 /* Initialization: Page not ready. No holders. All CPUs together, only one goes through */
 
-if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) /* +--r--++--w--+ */ { 
+if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) ) /* +--r--++--w--+ */ { 
 
 load_page ();
 
@@ -101,7 +101,7 @@ spin_lock_out (page_table);
 
 /* Uninitialization: Page not ready. No holders. All CPUs together, only one goes through */
 
-if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
+if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) ) /* +--r--++--w--+ */ { 
 
 unload_page ();
 
