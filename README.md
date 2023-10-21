@@ -86,9 +86,9 @@ atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
 
 start_working:
 
-spin_lock_in (page_table); /* not lock page->ref */
+spin_lock_in (page_table); /* not to lock page->ref */
 
-if ( page->ref > 1 ) /* +--r--+ */ /* fresh new value, not the old value when something happened */ {
+if ( page->ref > 1 ) /* +--r--+ */ /* fresh new value, not the old value when something happened (e.g. a page fault) */ {
 
 split_page ( &page ); /* copy-on-write */
 
