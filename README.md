@@ -61,7 +61,7 @@ Algorithm:
 * 0: ready
 * 1+: number of holders (i.e. page table records)
 
-/* initialization: page not ready. all together, only one goes through */
+/* Initialization: Page not ready. No holders. All together, only one goes through */
 
 if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) /* +--r--++--w--+ */ { 
 
@@ -79,7 +79,7 @@ sleep ();
 
 }
 
-/* working: page ready. all together, only one goes through */
+/* Working: Page ready. There are holders. All together, only one goes through */
 
 spin_lock_in (page_table); /* also lock page->ref */
 
@@ -99,7 +99,7 @@ set_page_table ( page ) /* the page table record holds the page */
 
 spin_lock_out (page_table);
 
-/* uninitialization: page not ready. all together, only one goes through */
+/* Uninitialization: Page not ready. No holders. All together, only one goes through */
 
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
