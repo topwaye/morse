@@ -59,7 +59,7 @@ Algorithm:
 * -2: free
 * -1: intermediate state (i.e. exchange data with a disk)
 * 0: ready
-* 1+: number of holders (i.e. page tables)
+* 1+: number of holders (i.e. page table records)
 
 /* initialization: page not ready. a lot of holders, only one holder works through */
 
@@ -91,7 +91,7 @@ split_page ( &page ); /* copy-on-write */
 
 }
 
-set_page_table ( page ) ? /* the page table holds the page */
+set_page_table ( page ) ? /* the page table record holds the page */
 
 page->ref++ : /* increase the holder count */
 
