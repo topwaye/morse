@@ -80,13 +80,13 @@ sleep ();
 
 /* working: page ready. a lot of holders. */
 
-lock_in ();
+spin_lock_in ();
 
 if ( page->ref == 1 ) set_page_table ();
 
 if ( page->ref > 1 ) set_page_table ();
 
-lock_out ();
+spin_lock_out ();
 
 /* uninitialization: page not ready. a lot of holders, only the last one holder works through. */
 
