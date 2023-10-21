@@ -60,11 +60,7 @@ Algorithm:
 * -1: intermediate state (i.e. loading data from a disk)
 * 1+: number of holders
 
-/*---------------------------------------------------------------------------------*/
-
 /* initialization: page not ready. a lot of holders, only one holder works through */
-
-/*---------------------------------------------------------------------------------*/
 
 if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
@@ -86,11 +82,7 @@ sleep ();
 
 atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
 
-/*---------------------------------------*/
-
 /* working: page ready. a lot of holders */
-
-/*---------------------------------------*/
 
 start_working: assert ( page->ref >= 1 ); /* +--r--+ */
 
@@ -106,11 +98,7 @@ set_page_table ( page );
 
 spin_lock_out (page_table);
 
-/*--------------------------------------------------------------------------------------------*/
-
 /* uninitialization: page not ready. a lot of holders, only the last one holder works through */
-
-/*--------------------------------------------------------------------------------------------*/
 
 if ( atomic_rw_group_decrease ( page->ref ) == 0 ) /* +--r--++--w--+ */ {
 
