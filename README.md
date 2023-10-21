@@ -56,21 +56,20 @@ Consider the following concurrence scenario: Process A and Process B use the sam
 Algorithm:
 
 * page->ref:
-* 0: free
-* -1: intermediate state (i.e. loading data from a disk)
-* 1+: number of holders
+* -2: free
+* -1: intermediate state (i.e. exchange data with a disk)
+* 0: ready
+* 1+: number of holders (i.e. page tables)
 
 /* initialization: page not ready. a lot of holders, only one holder works through */
 
-if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
+if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) /* +--r--++--w--+ */ { 
 
 load_page ();
 
-page->ref = 1; /* +--w--+ */ /* no more sleepers */
+page->ref = 0; /* +--w--+ */ /* no more sleepers */
 
 wake ();
-
-goto start_working;
 
 }
 
@@ -80,29 +79,33 @@ sleep ();
 
 }
 
-atomic_rw_group_increase ( page->ref ); /* +--r--++--w--+ */
-
 /* working: page ready. a lot of holders here ready to go */
 
-start_working: assert ( page->ref >= 1 ); /* +--r--+ */
+spin_lock_in (page_table); /* also lock page->ref */
 
-spin_lock_in (page_table); /* not to lock page->ref */
+assert ( page->ref >= 0 ); /* +--r--+ */
 
-if ( page->ref > 1 ) /* +--r--+ */ /* fresh new value, not the old value when something happened (e.g. a page fault) */ {
+if ( page->ref > 1 ) /* +--r--+ */ /* the old value when something happened (e.g. a page fault) */ {
 
 split_page ( &page ); /* copy-on-write */
 
 }
 
-set_page_table ( page );
+set_page_table ( page ) ? /* the page table holds the page */
+
+page->ref++ : /* increase holder count */
+
+page->ref--; /* decrease holder count */
 
 spin_lock_out (page_table);
 
 /* uninitialization: page not ready. a lot of holders, only the last one holder works through */
 
-if ( atomic_rw_group_decrease ( page->ref ) == 0 ) /* +--r--++--w--+ */ {
+if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) /* +--r--++--w--+ */ { 
 
 unload_page ();
+
+page->ref = -2; /* +--w--+ */
 
 }
 
