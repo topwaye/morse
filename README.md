@@ -55,63 +55,77 @@ Consider the following concurrence scenario: Process A and Process B use the sam
 
 Algorithm:
 
+* page_table->busy:
+* page->busy:
+* 0: free
+* 1: busy
 * page->ref:
-* -2: free
-* -1: intermediate state (i.e. exchanging data with a disk)
-* 0: ready
+* 0: free
 * 1+: number of holders (i.e. page table records)
 
-/* Initialization: Page not ready. No holders. All CPUs together, only one goes through */
+/* All CPUs together, only one goes through the same one page table */
 
-if ( atomic_rw_group_if_then ( page->ref, -2 , -1 ) ) /* +--r--++--w--+ */ { 
+if ( page_table->busy == 1 ) /* +--r--+ */ {
+
+sleep_on ( page_table );
+
+}
+
+if ( atomic_rw_group_if_then ( page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
+
+if ( ! done ) /* whether work already done by someone else or not */ {
+
+call start_working;
+
+}
+
+page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
+
+wake_on ( page_table ); /* may be 0 sleeper */
+
+}
+
+/* All CPUs together, only one goes through the same one page */
+
+start_working:
+
+if ( page->busy == 1 ) /* +--r--+ */ {
+
+sleep_on ( page );
+
+}
+
+if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
+
+call start_working_x;
+
+page->busy = 0; /* +--w--+ */ /* no more sleepers */
+
+wake_on ( page ); /* may be 0 sleeper */
+
+}
+
+start_working_x:
+
+assert ( page->ref >= 0 );
 
 load_data ( page );
 
-page->ref = 0; /* +--w--+ */ /* no more sleepers */
-
-wake ();
-
-}
-
-if ( page->ref == -1 ) /* +--r--+ */ {
-
-sleep ();
-
-}
-
-/* Working: Page ready. There are holders. All CPUs together, only one goes through */
-
-spin_lock_in ( physical_address ( page ) );
-
-assert ( page->ref >= 0 ); /* +--r--+ */
-
-if ( done ) {
-
-return;
-
-}
-
-if ( page->ref > 1 ) /* +--r--+ */ /* 'static' value, not refreshing */ {
+if ( page->ref > 1 ) /* 'static' value, not refreshing */ {
 
 split_page ( &page ); /* copy-on-write */
 
 }
 
-set_page_table ( page ) /* the page table record holds the page */
+set_page_table ( page ) /* the page table record holds the page */4
 
 ? page->ref++ /* increase the holder count */
 
 : page->ref--; /* decrease the holder count */
 
-spin_lock_out ( physical_address ( page ) );
-
-/* Uninitialization: Page not ready. No holders. All CPUs together, only one goes through */
-
-if ( atomic_rw_group_if_then ( page->ref, 0 , -1 ) ) /* +--r--++--w--+ */ { 
+if ( page->ref == 0 ) /* 'static' value, not refreshing */ {
 
 unload_data ( page );
-
-page->ref = -2; /* +--w--+ */
 
 }
 
