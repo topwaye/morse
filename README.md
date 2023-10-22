@@ -63,7 +63,7 @@ Algorithm:
 * 0: free
 * 1+: number of holders (i.e. page table records)
 
-/* All CPUs together, only one goes through the same one page table */
+/* all CPUs together, only one goes through the same one page table */
 
 if ( page_table->busy == 1 ) /* +--r--+ */ {
 
@@ -85,7 +85,7 @@ wake_on ( page_table ); /* may be 0 sleeper */
 
 }
 
-/* All CPUs together, only one goes through the same one page */
+/* all CPUs together, only one goes through the same one page */
 
 start_working:
 
@@ -117,11 +117,11 @@ split_page ( &page ); /* copy-on-write */
 
 }
 
-set_page_table ( page ) /* the page table record holds the page */4
+set_page_table ( page ) /* page table record holds page */
 
-? page->ref++ /* increase the holder count */
+? page->ref++ /* increase holder count */
 
-: page->ref--; /* decrease the holder count */
+: page->ref--; /* decrease holder count */
 
 if ( page->ref == 0 ) /* 'static' value, not refreshing */ {
 
