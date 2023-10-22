@@ -81,7 +81,7 @@ sleep ();
 
 /* Working: Page ready. There are holders. All CPUs together, only one goes through */
 
-spin_lock_in (page);
+spin_lock_in ( page );
 
 assert ( page->ref >= 0 ); /* +--r--+ */
 
@@ -103,7 +103,7 @@ set_page_table ( page ) /* the page table record holds the page */
 
 : page->ref--; /* decrease the holder count */
 
-spin_lock_out (page);
+spin_lock_out ( page );
 
 /* Uninitialization: Page not ready. No holders. All CPUs together, only one goes through */
 
