@@ -107,11 +107,15 @@ wake_on ( page ); /* may be 0 sleeper */
 
 start_working_x:
 
-assert ( page->ref >= 0 );
+assert ( page->ref >= 0 ); /* 'static' value, not refreshing */
+
+if ( page->ref == 0 ) {
 
 load_data ( page );
 
-if ( page->ref > 1 ) /* 'static' value, not refreshing */ {
+}
+
+if ( page->ref > 1 ) {
 
 split_page ( &page ); /* copy-on-write */
 
@@ -123,7 +127,7 @@ set_page_table ( page ) /* page table record holds page */
 
 : page->ref--; /* decrease holder count */
 
-if ( page->ref == 0 ) /* 'static' value, not refreshing */ {
+if ( page->ref == 0 ) {
 
 unload_data ( page );
 
