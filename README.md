@@ -57,6 +57,7 @@ Algorithm:
 
 * page_table->busy:
 * page->busy:
+* -1: intermediate state (i.e. spinning)
 * 0: free
 * 1: busy
 * page->ref:
@@ -65,11 +66,7 @@ Algorithm:
 
 /* all CPUs together, only one goes through the same one page table */
 
-if ( page_table->busy == 1 ) /* +--r--+ */ {
-
-sleep_on ( page_table );
-
-}
+while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
@@ -79,9 +76,21 @@ call start_working;
 
 }
 
-page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
+page_table->busy = -1; /* +--w--+ */ /* no more sleepers */
 
 wake_on ( page_table ); /* may be 0 sleeper */
+
+page_table->busy = 0; /* +--w--+ */
+
+return; /* call ... */
+
+}
+
+if ( page_table->busy == 1 ) /* +--r--+ */ {
+
+sleep_on ( page_table );
+
+}
 
 }
 
@@ -89,19 +98,27 @@ wake_on ( page_table ); /* may be 0 sleeper */
 
 start_working:
 
-if ( page->busy == 1 ) /* +--r--+ */ {
-
-sleep_on ( page );
-
-}
+while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
 call start_working_x;
 
-page->busy = 0; /* +--w--+ */ /* no more sleepers */
+page->busy = -1; /* +--w--+ */ /* no more sleepers */
 
 wake_on ( page ); /* may be 0 sleeper */
+
+page->busy = 0; /* +--w--+ */
+
+return; /* call start_working */
+
+}
+
+if ( page->busy == 1 ) /* +--r--+ */ {
+
+sleep_on ( page );
+
+}
 
 }
 
