@@ -69,7 +69,7 @@ atomic_rw_group_increase ( &i ); /* +--r--++--w--+ *//* 1 + count of entering sl
 
 while ( 1 ) {
 
-if ( atomic_rw_group_if_then ( page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
+if ( atomic_rw_group_if_then ( &page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
 while ( j ); /* +--r--+ *//* spinning to wait for return, because someone else not ending yet */
 
@@ -111,7 +111,7 @@ atomic_rw_group_increase ( &n ); /* +--r--++--w--+ *//* 1 + count of entering sl
 
 while ( 1 ) {
 
-if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
+if ( atomic_rw_group_if_then ( &page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
 while ( m ); /* +--r--+ *//* spinning to wait for return, because someone else not ending yet */
 
