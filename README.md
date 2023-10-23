@@ -65,11 +65,15 @@ Algorithm:
 
 /* all CPUs together, only one goes through the same one page table */
 
+atomic_rw_group_increase ( &i ); /* +--r--++--w--+ *//* 1 + count of entering sleep queue */
+
 while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
-spin_wait_to_return ( i ); /* someone else not ending yet */
+while ( j ); /* +--r--+ *//* spinning to wait for return, because someone else not ending yet */
+
+atomic_rw_group_increase ( &j ); /* +--r--++--w--+ */
 
 if ( ! done ) /* whether work already done by someone else or not */ {
 
@@ -77,11 +81,15 @@ call start_working;
 
 }
 
-spin_wait_to_full_sleep_queue ( j ); /* wait for enter_sleep_queue_on ( page_table ) ending */
+while ( get_sleep_queue_length () + 1 < i  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
 
 page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
 
 empty_sleep_queue_on ( page_table );
+
+atomic_rw_group_decrease ( &i ); /* +--r--++--w--+ */
+
+atomic_rw_group_decrease ( &j ); /* +--r--++--w--+ */
 
 return; /* call ... */
 
@@ -97,21 +105,31 @@ enter_sleep_queue_on ( page_table );
 
 start_working:
 
+atomic_rw_group_increase ( &n ); /* +--r--++--w--+ *//* 1 + count of entering sleep queue */
+
 while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
-spin_wait_to_return ( n ); /* someone else not ending yet */
+while ( m ); /* +--r--+ *//* spinning to wait for return, because someone else not ending yet */
+
+atomic_rw_group_increase ( &m ); /* +--r--++--w--+ */
 
 call start_working_x;
 
-spin_wait_to_full_sleep_queue ( m ); /* wait for enter_sleep_queue_on ( page ) ending */
+}
 
-page->busy = 0; /* +--w--+ */ /* no more sleepers*/
+while ( get_sleep_queue_length () + 1 < n  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
+
+page->busy = 0; /* +--w--+ */ /* no more sleepers */
 
 empty_sleep_queue_on ( page );
 
-return; /* call start_working */
+atomic_rw_group_decrease ( &n ); /* +--r--++--w--+ */
+
+atomic_rw_group_decrease ( &m ); /* +--r--++--w--+ */
+
+return; /* call ... */
 
 } else {
 
