@@ -81,11 +81,13 @@ call start_working;
 
 }
 
-while ( get_sleep_queue_length () + 1 < i  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
+k = i; /* k is a 'static' value, not refreshing */
+
+while ( get_sleep_queue_length () + 1 < k  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
 
 page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
 
-empty_sleep_queue_on ( page_table );
+empty_sleep_queue_on ( page_table, k );
 
 atomic_rw_group_decrease ( &i ); /* +--r--++--w--+ */
 
@@ -119,11 +121,13 @@ call start_working_x;
 
 }
 
-while ( get_sleep_queue_length () + 1 < n  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
+t = n; /* t is a 'static' value, not refreshing */
+
+while ( get_sleep_queue_length () + 1 < t  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
 
 page->busy = 0; /* +--w--+ */ /* no more sleepers */
 
-empty_sleep_queue_on ( page );
+empty_sleep_queue_on ( page, t );
 
 atomic_rw_group_decrease ( &n ); /* +--r--++--w--+ */
 
