@@ -83,7 +83,7 @@ call start_working;
 
 k = i; /* k is a 'static' value, not refreshing */
 
-while ( get_sleep_queue_length () + 1 < k  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
+while ( get_sleep_queue_length () + 1 < k  ); /* +--r--+ *//* waiting for enter_sleep_queue_on () ending */
 
 page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
 
@@ -123,7 +123,7 @@ call start_working_x;
 
 t = n; /* t is a 'static' value, not refreshing */
 
-while ( get_sleep_queue_length () + 1 < t  ); /* +--r--+ *//* wait for enter_sleep_queue_on () ending */
+while ( get_sleep_queue_length () + 1 < t  ); /* +--r--+ *//* waiting for enter_sleep_queue_on () ending */
 
 page->busy = 0; /* +--w--+ */ /* no more sleepers */
 
