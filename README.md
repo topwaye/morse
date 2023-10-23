@@ -53,11 +53,10 @@ Copy-on-write is safe.
 
 Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A share with each other partly. Process C quits, Process A triggers copy-on-write (e.g. writing a page), Process B spawns Process D. That is, Process A and Process B change the same page table at the same time.
 
-Algorithm:
+Algorithm: (There is no deadlock.)
 
 * page_table->busy:
 * page->busy:
-* -1: intermediate state (i.e. spinning)
 * 0: free
 * 1: busy
 * page->ref:
@@ -76,11 +75,9 @@ call start_working;
 
 }
 
-page_table->busy = -1; /* +--w--+ */ /* no more sleepers */
+page_table->busy = 0; /* +--w--+ */ /* no more sleepers, but enter_sleep_queue_on ( page_table ) is ready to go */
 
-wake_on ( page_table ); /* may be 0 sleeper */
-
-page_table->busy = 0; /* +--w--+ */
+empty_sleep_queue_on ( page_table );
 
 return; /* call ... */
 
@@ -88,7 +85,7 @@ return; /* call ... */
 
 if ( page_table->busy == 1 ) /* +--r--+ */ {
 
-sleep_on ( page_table );
+enter_sleep_queue_on ( page_table );
 
 }
 
@@ -104,11 +101,9 @@ if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ {
 
 call start_working_x;
 
-page->busy = -1; /* +--w--+ */ /* no more sleepers */
+page->busy = 0; /* +--w--+ */ /* no more sleepers, but enter_sleep_queue_on ( page ) is ready to go */
 
-wake_on ( page ); /* may be 0 sleeper */
-
-page->busy = 0; /* +--w--+ */
+empty_sleep_queue_on ( page ); /* may be 0 sleeper */
 
 return; /* call start_working */
 
@@ -116,7 +111,7 @@ return; /* call start_working */
 
 if ( page->busy == 1 ) /* +--r--+ */ {
 
-sleep_on ( page );
+enter_sleep_queue_on ( page );
 
 }
 
