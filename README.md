@@ -93,7 +93,7 @@ atomic_rw_group_decrease ( &i ); /* +--r--++--w--+ */
 
 atomic_rw_group_decrease ( &j ); /* +--r--++--w--+ */
 
-return; /* call ... */
+return; /* call .. */
 
 } else {
 
@@ -131,7 +131,7 @@ atomic_rw_group_decrease ( &n ); /* +--r--++--w--+ */
 
 atomic_rw_group_decrease ( &m ); /* +--r--++--w--+ */
 
-return; /* call ... */
+return; /* call start_working */
 
 } else {
 
