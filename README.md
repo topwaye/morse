@@ -69,21 +69,23 @@ while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page_table->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
+spin_wait_to_return ( i ); /* someone else not ending yet */
+
 if ( ! done ) /* whether work already done by someone else or not */ {
 
 call start_working;
 
 }
 
-page_table->busy = 0; /* +--w--+ */ /* no more sleepers, but enter_sleep_queue_on ( page_table ) is ready to go */
+spin_wait_to_full_sleep_queue ( j ); /* wait for enter_sleep_queue_on ( page_table ) ending */
+
+page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
 
 empty_sleep_queue_on ( page_table );
 
 return; /* call ... */
 
-}
-
-if ( page_table->busy == 1 ) /* +--r--+ */ {
+} else {
 
 enter_sleep_queue_on ( page_table );
 
@@ -99,17 +101,19 @@ while ( 1 ) {
 
 if ( atomic_rw_group_if_then ( page->busy, 0 , 1 ) ) /* +--r--++--w--+ */ { 
 
+spin_wait_to_return ( n ); /* someone else not ending yet */
+
 call start_working_x;
 
-page->busy = 0; /* +--w--+ */ /* no more sleepers, but enter_sleep_queue_on ( page ) is ready to go */
+spin_wait_to_full_sleep_queue ( m ); /* wait for enter_sleep_queue_on ( page ) ending */
 
-empty_sleep_queue_on ( page ); /* may be 0 sleeper */
+page->busy = 0; /* +--w--+ */ /* no more sleepers*/
+
+empty_sleep_queue_on ( page );
 
 return; /* call start_working */
 
-}
-
-if ( page->busy == 1 ) /* +--r--+ */ {
+} else {
 
 enter_sleep_queue_on ( page );
 
