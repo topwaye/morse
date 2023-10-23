@@ -119,8 +119,6 @@ atomic_rw_group_increase ( &m ); /* +--r--++--w--+ */
 
 call start_working_x;
 
-}
-
 t = n; /* t is a 'static' value, not refreshing */
 
 while ( get_sleep_queue_length () + 1 < t  ); /* +--r--+ *//* waiting for enter_sleep_queue_on () ending */
