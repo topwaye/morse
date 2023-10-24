@@ -87,7 +87,7 @@ while ( get_sleep_queue_length () + 1 < k  ); /* +--r--+ *//* waiting for enter_
 
 page_table->busy = 0; /* +--w--+ */ /* no more sleepers */
 
-empty_sleep_queue_on ( page_table, k );
+empty_sleep_queue_on ( page_table, k - 1 );
 
 atomic_rw_group_decrease ( &i ); /* +--r--++--w--+ */
 
@@ -125,7 +125,7 @@ while ( get_sleep_queue_length () + 1 < t  ); /* +--r--+ *//* waiting for enter_
 
 page->busy = 0; /* +--w--+ */ /* no more sleepers */
 
-empty_sleep_queue_on ( page, t );
+empty_sleep_queue_on ( page, t - 1 );
 
 atomic_rw_group_decrease ( &n ); /* +--r--++--w--+ */
 
