@@ -169,4 +169,6 @@ unload_data ( page );
 
 }
 
+Beware: In parallel computing, a + b, a and b should be 'static' values, not refreshing.
+
 topwaye@hotmail.com
