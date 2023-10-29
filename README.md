@@ -173,6 +173,8 @@ Beware: in parallel computing, function ( a, b ), a and b should be 'static' val
 
 Virtual machine memory layout is shown as follows:
 
-+--header--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
++--headerVM--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
+
+HeaderVM records header0 and header1. Header0 records program0. Header1 records program1.
 
 topwaye@hotmail.com
