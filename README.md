@@ -169,6 +169,10 @@ unload_data ( page );
 
 }
 
-Beware: In parallel computing, function ( a, b ), a and b should be 'static' values, not refreshing.
+Beware: in parallel computing, function ( a, b ), a and b should be 'static' values, not refreshing.
+
+Virtual machine memory layout is shown as follows:
+
++--header--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
 topwaye@hotmail.com
