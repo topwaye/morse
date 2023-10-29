@@ -175,6 +175,6 @@ Virtual machine memory layout is shown as follows:
 
 +--headerVM--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
-HeaderVM records header0 and header1. Header0 records program0. Header1 records program1.
+HeaderVM records header0, program0, header1 and program1. Header0 records program0 in headerVM space. Header1 records program1 in headerVM space.
 
 topwaye@hotmail.com
