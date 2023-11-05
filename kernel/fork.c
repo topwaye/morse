@@ -1,5 +1,5 @@
 /*
- *  linux/kernel/fork.c
+ *  morse/kernel/fork.c
  *
  *  Copyright (C) 1991, 1992  Linus Torvalds
  */
@@ -11,11 +11,11 @@
  * management can be a bitch. See 'mm/mm.c': 'copy_page_tables()'
  */
 
-#include <linux/errno.h>
-#include <linux/sched.h>
-#include <linux/kernel.h>
-#include <linux/mm.h>
-#include <linux/stddef.h>
+#include <morse/errno.h>
+#include <morse/sched.h>
+#include <morse/kernel.h>
+#include <morse/mm.h>
+#include <morse/stddef.h>
 
 #include <asm/segment.h>
 #include <asm/system.h>
