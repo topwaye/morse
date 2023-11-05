@@ -1,10 +1,4 @@
 /*
- *  morse/kernel/fork.c
- *
- *  Copyright (C) 1991, 1992  Linus Torvalds
- */
-
-/*
  *  'fork.c' contains the help-routines for the 'fork' system call
  * (see also system_call.s), and some misc functions ('verify_area').
  * Fork is rather simple, once you get the hang of it, but the memory
