@@ -1,5 +1,5 @@
 /*
- *  linux/mm/memory.c
+ *  morse/mm/memory.c
  *
  *  Copyright (C) 1991, 1992  Linus Torvalds
  */
@@ -30,13 +30,13 @@
 
 #include <asm/system.h>
 
-#include <linux/signal.h>
-#include <linux/sched.h>
-#include <linux/head.h>
-#include <linux/kernel.h>
-#include <linux/errno.h>
-#include <linux/string.h>
-#include <linux/types.h>
+#include <morse/signal.h>
+#include <morse/sched.h>
+#include <morse/head.h>
+#include <morse/kernel.h>
+#include <morse/errno.h>
+#include <morse/string.h>
+#include <morse/types.h>
 
 unsigned long high_memory = 0;
 
