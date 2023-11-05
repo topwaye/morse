@@ -1,10 +1,4 @@
 /*
- *  morse/mm/memory.c
- *
- *  Copyright (C) 1991, 1992  Linus Torvalds
- */
-
-/*
  * demand-loading started 01.12.91 - seems it is high on the list of
  * things wanted, and it should be easy to implement. - Linus
  */
