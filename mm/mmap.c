@@ -1,8 +1,3 @@
-/*
- *	morse/mm/mmap.c
- *
- * Written by obz.
- */
 #include <morse/stat.h>
 #include <morse/sched.h>
 #include <morse/kernel.h>
