@@ -1,5 +1,5 @@
 # MORSE
-Morse Operating System (based on Linux 0.97)
+Morse Operating System (based on Linux 0.99.5)
 
 A 286 CPU is like an old style battery charger.
 
