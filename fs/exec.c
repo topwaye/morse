@@ -1,5 +1,5 @@
 /*
- *  linux/fs/exec.c
+ *  morse/fs/exec.c
  *
  *  Copyright (C) 1991, 1992  Linus Torvalds
  */
@@ -17,18 +17,18 @@
  * was less than 2 hours work to get demand-loading completely implemented.
  */
 
-#include <linux/fs.h>
-#include <linux/sched.h>
-#include <linux/kernel.h>
-#include <linux/mm.h>
-#include <linux/a.out.h>
-#include <linux/errno.h>
-#include <linux/signal.h>
-#include <linux/string.h>
-#include <linux/stat.h>
-#include <linux/fcntl.h>
-#include <linux/ptrace.h>
-#include <linux/user.h>
+#include <morse/fs.h>
+#include <morse/sched.h>
+#include <morse/kernel.h>
+#include <morse/mm.h>
+#include <morse/a.out.h>
+#include <morse/errno.h>
+#include <morse/signal.h>
+#include <morse/string.h>
+#include <morse/stat.h>
+#include <morse/fcntl.h>
+#include <morse/ptrace.h>
+#include <morse/user.h>
 
 #include <asm/segment.h>
 
