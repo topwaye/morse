@@ -20,7 +20,7 @@
 #include <asm/segment.h>
 #include <asm/system.h>
 
-#define MAX_TASKS_PER_USER ((NR_TASKS/4)*3)
+#define MAX_TASKS_PER_USER (NR_TASKS/2)
 
 long last_pid=0;
 
@@ -31,7 +31,6 @@ void verify_area(void * addr,int size)
 	start = (unsigned long) addr;
 	size += start & 0xfff;
 	start &= 0xfffff000;
-	start += get_base(current->ldt[2]);
 	while (size>0) {
 		size -= 4096;
 		write_verify(start);
@@ -39,42 +38,15 @@ void verify_area(void * addr,int size)
 	}
 }
 
-int copy_mem(int nr,struct task_struct * p)
-{
-	unsigned long old_data_base,new_data_base,data_limit;
-	unsigned long old_code_base,new_code_base,code_limit;
-
-	code_limit = get_limit(0x0f);
-	data_limit = get_limit(0x17);
-	old_code_base = get_base(current->ldt[1]);
-	old_data_base = get_base(current->ldt[2]);
-	if (old_data_base != old_code_base) {
-		printk("ldt[0]: %08x %08x\n",current->ldt[0].a,current->ldt[0].b);
-		printk("ldt[1]: %08x %08x\n",current->ldt[1].a,current->ldt[1].b);
-		printk("ldt[2]: %08x %08x\n",current->ldt[2].a,current->ldt[2].b);
-		panic("We don't support separate I&D");
-	}
-	if (data_limit < code_limit)
-		panic("Bad data_limit");
-	new_data_base = new_code_base = nr * TASK_SIZE;
-	p->start_code = new_code_base;
-	set_base(p->ldt[1],new_code_base);
-	set_base(p->ldt[2],new_data_base);
-	if (copy_page_tables(old_data_base,new_data_base,data_limit)) {
-		free_page_tables(new_data_base,data_limit);
-		return -ENOMEM;
-	}
-	return 0;
-}
-
 static int find_empty_process(void)
 {
 	int i, task_nr;
-	int this_user_tasks = 0;
+	int this_user_tasks;
 
 repeat:
-	if ((++last_pid) & 0xffff0000)
+	if ((++last_pid) & 0xffff8000)
 		last_pid=1;
+	this_user_tasks = 0;
 	for(i=0 ; i < NR_TASKS ; i++) {
 		if (!task[i])
 			continue;
@@ -121,11 +93,10 @@ int sys_fork(long ebx,long ecx,long edx,
 		return nr;
 	}
 	task[nr] = p;
-	*p = *current;	/* NOTE! this doesn't copy the supervisor stack */
-	p->wait.task = p;
-	p->wait.next = NULL;
+	*p = *current;
+	p->kernel_stack_page = 0;
 	p->state = TASK_UNINTERRUPTIBLE;
-	p->flags &= ~PF_PTRACED;
+	p->flags &= ~(PF_PTRACED|PF_TRACESYS);
 	p->pid = last_pid;
 	if (p->pid > 1)
 		p->swappable = 1;
@@ -143,7 +114,6 @@ int sys_fork(long ebx,long ecx,long edx,
 	p->cmin_flt = p->cmaj_flt = 0;
 	p->start_time = jiffies;
 	p->tss.back_link = 0;
-	p->tss.esp0 = PAGE_SIZE + (long) p;
 	p->tss.ss0 = 0x10;
 	p->tss.eip = eip;
 	p->tss.eflags = eflags & 0xffffcfff;	/* iopl is always 0 for a new process */
@@ -167,14 +137,17 @@ int sys_fork(long ebx,long ecx,long edx,
 		p->tss.io_bitmap[i] = ~0;
 	if (last_task_used_math == current)
 		__asm__("clts ; fnsave %0 ; frstor %0"::"m" (p->tss.i387));
-	if (copy_mem(nr,p)) {
+	p->kernel_stack_page = get_free_page(GFP_KERNEL);
+	if (!p->kernel_stack_page || copy_page_tables(p)) {
 		task[nr] = NULL;
 		REMOVE_LINKS(p);
+		free_page(p->kernel_stack_page);
 		free_page((long) p);
 		return -EAGAIN;
 	}
+	p->tss.esp0 = PAGE_SIZE + p->kernel_stack_page;
 	for (i=0; i<NR_OPEN;i++)
-		if (f=p->filp[i])
+		if ((f = p->filp[i]) != NULL)
 			f->f_count++;
 	if (current->pwd)
 		current->pwd->i_count++;
