@@ -1,4 +1,5 @@
 # MORSE
+
 Morse Operating System (based on Linux 0.99.5)
 
 A 286 CPU is like an old style battery charger.
@@ -30,6 +31,10 @@ Almost all CPUs today is interrupt-driven, which means they follow a list of ins
 In this case, header0 and header1 create two spaces totally. Each space cannot access the other directly or indirectly.
 
 For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+
+MORSE memory layout is shown as follows:
+
++--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
 
 A network is based on a one-to-one architecture.
 
