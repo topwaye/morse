@@ -31,10 +31,6 @@ In this case, header0 and header1 create two spaces totally. Each space cannot a
 
 For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
 
-MORSE memory layout is shown as follows:
-
-+--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
-
 A network is based on a one-to-one architecture.
 
 TCP is one packet for one ack packet asynchronously, meaning a batch of packets are transferred at one time, then TCP waits for their ack packets.
@@ -180,5 +176,11 @@ Virtual machine memory layout is shown as follows:
 +--headerVM--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
 HeaderVM records header0, program0, header1 and program1. Header0 records program0 in headerVM space. Header1 records program1 in headerVM space.
+
+MORSE memory layout is shown as follows:
+
++--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
+
+In essence, a living OS is a procedure of an egg spawning an egg.
 
 topwaye@hotmail.com
