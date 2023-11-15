@@ -181,6 +181,6 @@ MORSE memory layout is shown as follows:
 
 +--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
 
-In essence, a living OS is a procedure of an egg spawning an egg.
+Essentially, when powered on, a living OS is a procedure of an egg spawning an egg.
 
 topwaye@hotmail.com
