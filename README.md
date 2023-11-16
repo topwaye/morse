@@ -1,7 +1,7 @@
 # MORSE
 Morse Operating System (based on Linux 0.99.5)
 
-A 286 CPU is like an old style battery charger.
+A 286 CPU is like an old-style battery charger.
 
 MORSE is alternatively called header 286 segments. A 286 CPU can control memory segments directly, but a 386 CPU doesn't. It controls memory segments through headers which give them spaces. No header, no concept of space, only memory segments.
 
@@ -181,6 +181,6 @@ MORSE memory layout is shown as follows:
 
 +--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
 
-Essentially, when powered on, a living OS is a procedure of a battery selecting a battery in an old style battery charger.
+Essentially, when powered on, a living OS is a procedure of a battery selecting a battery in an old-style battery charger.
 
 topwaye@hotmail.com
