@@ -15,7 +15,7 @@ The concept of segment appeared in 286, and the concept of space appeared in 386
 
 +--header0--++-----------program0-----------++--header1--++-----------program1-----------+
 
-When booting, MORSE program is read into a memory segment from a disk, then sets a page table (i.e. a header), which puts this memory segment into a space, preparing for CPU paging.
+When booting, MORSE program is read into a blank memory segment from a disk, then sets a page table (i.e. a header), which puts this memory segment into a space, preparing for CPU paging.
 
 Once CPU paging is enabled, the first process has been ready.
 
