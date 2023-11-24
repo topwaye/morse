@@ -43,7 +43,7 @@ Copy-on-write means if you find you cannot write, change a page table record of 
 
 Dirty-read/write doesn't exist on a hardware layer, only read or write one by one, because there is a God (i.e. a bus arbiter).
 
-On a bus, everything is serial, not parallel. That is, one is writing, another one is waiting automatically, not reading or writing.
+On a bus, everything is serial, not parallel. That is, one is reading or writing, the others are waiting automatically, not reading or writing.
 
 On a bus, a series of CPU instructions are shown as follows:
 
