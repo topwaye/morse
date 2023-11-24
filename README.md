@@ -183,4 +183,6 @@ MORSE memory layout is shown as follows:
 
 Essentially, when powered on, a living OS is a procedure of a battery selecting a battery in an old-style battery charger.
 
+There are public batteries and private batteries identified by Session ID. A public battery can only be derived from a public battery, A private battery may be derived from a public battery, or from a private battery with the same Session ID, but may not be derived from other private batteries.
+
 topwaye@hotmail.com
