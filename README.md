@@ -171,6 +171,8 @@ unload_data ( page );
 
 Beware: in parallel computing, function ( a, b ), a and b should be 'static' values, not refreshing.
 
+The sleeping mechanism ensures that only one process at a time manipulates an object. However, an interrupt service routine manipulating the same one object in this/another running process can break this rule resulting in a conflict. Therefore, before manipulating this object, we must raise the processor priority level to block out interrupts.
+
 Virtual machine memory layout is shown as follows:
 
 +--headerVM--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
