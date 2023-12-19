@@ -197,6 +197,4 @@ Signals are to wake up (i.e. ready to run) forcedly, and when plugging it back i
 
 When waking up naturally (i.e. there are no signals), it continues directly.
 
-Furthermore, you plug in a battery, but it is ejected (i.e. back to sleep) instantly, which means it is not ready to run.
-
 topwaye@hotmail.com
