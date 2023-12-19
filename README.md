@@ -191,4 +191,10 @@ There are public batteries and private batteries identified by Session ID. A pub
 
 The arrangement of batteries is like a colored tree, made up of battery nodes with different colors, representing the public and the private.
 
+Sleep is to pull a battery out of this old-style battery charger.
+
+Signals are to wake up (i.e. ready to run) forcedly, and when plugging it back in (i.e. running), it does a long jump before continuing, rather than continue directly.
+
+When waking up naturally (i.e. there are no signals), it continues directly.
+
 topwaye@hotmail.com
