@@ -49,7 +49,7 @@ On a bus, a series of CPU instructions are shown as follows:
 
 +--write--++--write a page table record--++--read--++--read--++--read--++--write--+
 
-Beware: in a 386 CPU, each instruction above consists of 2 steps: read a page table, and then read/write memory. The 2 steps are an atom.
+Beware: in a 386 CPU, each instruction above consists of 2 steps: read a page table, and then read/write memory. The 2 steps are an atom, monopolizing a bus.
 
 Copy-on-write is safe.
 
