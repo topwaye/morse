@@ -49,6 +49,8 @@ On a bus, a series of CPU instructions are shown as follows:
 
 +--write--++--write a page table record--++--read--++--read--++--read--++--write--+
 
+Beware: in a 386 CPU, each instruction above consists of 2 steps: read a page table, and then read/write memory. The 2 steps are an atom.
+
 Copy-on-write is safe.
 
 Consider the following concurrence scenario: Process A and Process B use the same one page table. Process C and Process A 'share' with each other partly. Process A and Process B trigger copy-on-write (e.g. writing the same one page 'shared' with Process C). That is, Process A and Process B change the same page table at the same time.
