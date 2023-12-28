@@ -203,4 +203,12 @@ Theoretically, you can plug in any batteries.
 
 Practically, if you do, some batteries are ejected (i.e. back to sleep) instantly, which means they are not ready to run.
 
+A battery is a container filled with round slices of electricity.
+
+Memory is a pond of round slices. Each round slice has a name by which we can find it out.
+
+Devices are sources of round slices to be put into or gotten from the pond.
+
+Debug is a procedure of plugging in a battery and then pulling it out.
+
 topwaye@hotmail.com
