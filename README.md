@@ -175,7 +175,7 @@ Beware: in parallel computing, function ( a, b ), a and b should be 'static' val
 
 The sleeping mechanism ensures that only one process at a time manipulates an object. However, an interrupt service routine manipulating the same one object in this/another running process can break this rule resulting in a conflict. Therefore, before manipulating this object, we must raise the processor priority level to block out interrupts.
 
-To summarise, only one manipulates an object.
+To summarise, only one monopolizes an object.
 
 Locks may be based on this sleeping mechanism. You meet a lock, you go to sleep.
 
