@@ -177,6 +177,8 @@ The sleeping mechanism ensures that only one process at a time manipulates an ob
 
 To summarise, only one manipulates an object.
 
+Locks may be based on this sleeping mechanism. You meet a lock, you go to sleep.
+
 Virtual machine memory layout is shown as follows:
 
 +--headerVM--++--header0--++-----------program0-----------++--header1--++-----------program1-----------+
