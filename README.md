@@ -197,13 +197,23 @@ The arrangement of batteries is like a colored tree, made up of battery nodes wi
 
 Sleep is to pull a battery out of this old-style battery charger.
 
-Signals are to wake up (i.e. ready to run) forcedly, and when plugging it back in (i.e. running), it does a long jump before continuing, rather than continue directly.
+A battery in running state means to turn on the indicator light of a slot in which the battery is plugged.
 
-When waking up naturally (i.e. there are no signals), it continues directly.
+Signals are marks. Nothing happens when setting a mark to a running battery, until when it goes into kernel area and returns to user area. 
+
+When waking up (i.e. plugging it back in) with a signal mark, it does a long jump before continuing, rather than continue directly.
+
+When waking up without a signal mask, it continues directly.
 
 Theoretically, you can plug in any batteries.
 
 Practically, if you do, some batteries are ejected (i.e. back to sleep) instantly, which means they are not ready to run.
+
+Furthermore, you can pull out any batteries, only when they pause (i.e. ready to sleep, or a clock interrupt).
+
+There are 3 positions to set priority of a battery for scheduling: kernel area, user area, and adjacency area.
+
+Each clock interrupt pulls out all batteries passively, then plugs in batteries according to battery priorities.
 
 A battery is a container filled with round slices of electricity.
 
