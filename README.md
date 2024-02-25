@@ -213,7 +213,7 @@ Furthermore, you can pull out any batteries, only when they pause (i.e. ready to
 
 There are 3 positions to set priority of a battery for scheduling: kernel area, user area, and adjacency area.
 
-Each clock interrupt pulls out all batteries passively, then plugs in batteries according to battery priorities.
+A clock interrupt on this processor enters the scheduling program to plug in a new battery according to battery priorities, after pulling out this old battery.
 
 A battery is a container filled with round slices of electricity.
 
