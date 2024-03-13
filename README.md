@@ -25,11 +25,11 @@ Almost all CPUs today are interrupt-driven, which means they follow a list of in
 
 386 memory expanded layout is shown as follows:
 
-+--h0--++--interrupt service program--++--program0--++--h1--++--interrupt service program--++--program1--+
++--h0--++--passive program--++--program0--++--h1--++--passive program--++--program1--+
 
 In this case, header0 and header1 create two spaces totally. Each space cannot access the other directly or indirectly.
 
-For header0 space, it puts the interrupt service program and program0 into two subspaces respectively. Each subspace cannot access the other directly.
+For header0 space, it puts the passive program (i.e. interrupt service program) and program0 into two subspaces respectively. Each subspace cannot access the other directly.
 
 A network is based on a one-to-one architecture.
 
@@ -191,7 +191,9 @@ HeaderVM records header0, program0, header1 and program1. Header0 records progra
 
 MORSE memory layout is shown as follows:
 
-+--h0--++--interrupt service program--++--h1--++--interrupt service program--++--program1--+
++--h0--++--passive program--++--h1--++--passive program--++--program1--+
+
+Passive programs and programs unite together to read and write.
 
 Essentially, an OS is a battery which gives birth to new batteries. When powered on, new batteries are born, a battery selects a battery to charge.
 
