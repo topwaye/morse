@@ -189,12 +189,6 @@ Virtual machine memory layout is shown as follows:
 
 HeaderVM records header0, program0, header1 and program1. Header0 records program0 in headerVM space. Header1 records program1 in headerVM space.
 
-MORSE memory layout is shown as follows:
-
-+--h0--++--passive program--++--h1--++--passive program--++--program1--+
-
-Passive programs and programs unite together to read and write.
-
 Essentially, an OS is a battery which gives birth to new batteries. When powered on, new batteries are born, a battery selects a battery to charge.
 
 There are public batteries and private batteries identified by Session ID. A public battery can only be derived from a public battery, A private battery may be derived from a public battery, or from a private battery with the same Session ID, but may not be derived from the other private batteries.
@@ -228,5 +222,11 @@ Memory is a pond of round slices. Each round slice has a name by which we can fi
 Devices are sources of round slices to be put into or gotten from the pond.
 
 Debug is a procedure of plugging in a battery and then pulling it out.
+
+MORSE memory layout is shown as follows:
+
++--h0--++--passive program--++--h1--++--passive program--++--program1--+
+
+Passive programs and programs unite together to read and write.
 
 topwaye@hotmail.com
