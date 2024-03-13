@@ -177,7 +177,11 @@ The sleeping mechanism ensures that only one process at a time manipulates an ob
 
 To summarise, one monopolizes an object.
 
-Locks may be based on this sleeping mechanism. You meet a lock, you go to sleep.
+You meet a lock based on this sleeping mechanism, you go to sleep.
+
+A lock is a mark, and this mark itself can be read and written indivisibly, which cannot be interrupted.
+
+In the range of a lock, executions are serialized, which can be interrupted in user area, which cannot be interrupted in kernel area, because kernel area serializes interrupts.
 
 Virtual machine memory layout is shown as follows:
 
