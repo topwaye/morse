@@ -229,4 +229,8 @@ MORSE memory layout is shown as follows:
 
 Passive programs and programs unite together to read and write.
 
+Executions of programs/passive programs are serialized.
+
+Programs can be interrupted. Passive programs cannot be interrupted, because passive programs serialize interrupts.
+
 topwaye@hotmail.com
