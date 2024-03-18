@@ -181,6 +181,8 @@ You meet a lock based on this sleeping mechanism, you go to sleep.
 
 A lock is a mark, and this mark itself can be read and written indivisibly, which cannot be interrupted.
 
+Setting a mark when accessing, testing a mark to block out other accessing, the 2 steps are how a lock works.
+
 In the range of a lock, executions are serialized, which can be interrupted in user area, which cannot be interrupted in kernel area, because kernel area serializes interrupts.
 
 Virtual machine memory layout is shown as follows:
