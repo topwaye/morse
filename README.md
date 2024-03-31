@@ -1,5 +1,5 @@
 # MORSE
-Morse Operating System (based on Linux 0.99.5)
+Morse Operating System (based on Linux 0.96c)
 
 A 286 CPU is like an old-style battery charger.
 
@@ -234,5 +234,9 @@ Passive programs and programs unite together to read and write.
 Executions of programs/passive programs are serialized.
 
 Programs can be interrupted. Passive programs cannot be interrupted, because passive programs serialize interrupts.
+
+For memory segment protection, use the concept of identity matching instead of privilege matching.
+
+So does file protection.
 
 topwaye@hotmail.com
